@@ -1,23 +1,9 @@
 {
-  "development": {
-    "username": "root",
-    "password": "123456",
-    "database": "electrostore_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "test": {
-    "username": "teste",
-    "password": "123456",
-    "database": "electrostore_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "rootproduction",
-    "password": "123456",
-    "database": "electrostore_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  }
+"development": {
+  "username": "avaliacao_fullstack",
+  "password": "avaliacao_fullstack",
+  "database": "produtos",
+  "host": "127.0.0.1",
+  "dialect": "mysql"
+}
 }

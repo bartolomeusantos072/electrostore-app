@@ -1,0 +1,26 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6">
+    <div class="card shadow border-info">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0 fw-bold">Consulta de Produto</h4>
+      </div>
+      <div class="card-body p-4">
+        <h2 class="fw-bold text-secondary mb-3">{{produto.nome}}</h2>
+        
+        <p><strong>Categoria:</strong> {{produto.Categoria.nome}}</p>
+        <p><strong>Preço Unitário:</strong> R$ {{produto.preco}}</p>
+        <p><strong>Quantidade em Estoque:</strong> {{produto.quantidade}} unidades</p>
+        <p><strong>Status do Registro:</strong> <span class="badge bg-secondary">{{produto.status}}</span></p>
+        
+        <div class="mb-4">
+          <label class="fw-bold text-muted">Descrição do Item:</label>
+          <div class="p-3 bg-light border rounded">{{produto.descricao}}</div>
+        </div>
+
+        <div class="text-center">
+          <a href="/" class="btn btn-primary px-4">Voltar para a Página Principal</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,91 +1,50 @@
-const { Produto, Usuario } = require('../models');
+const { Produto, Categoria } = require('../models');
 
-
-exports.listar = async (req, res) => {
+module.exports = {
+  exibirFormularioCadastro: async (req, res) => {
     try {
-        let filtro = {};
-        const { categoria } = req.query;
-
- 
-        if (categoria) {
-
-            if (isNaN(parseInt(categoria)) || parseInt(categoria) <= 0) {
-                return res.status(400).render('error', { 
-                    message: 'ID de categoria inválido. Deve ser um número inteiro positivo.' 
-                });
-            }
-     
-            filtro.categoria_id = parseInt(categoria); 
-        }
-
-        const produtos = await Produto.findAll({
-            where: filtro,
-            include: { model: Usuario, as: 'usuario' }
-        });
-
-  
-        res.status(200).render('produtos/index', { 
-            produtos: produtos, 
-            categoriaSelecionada: categoria 
-        });
+      const Blacklist = await Categoria.findAll();
+      res.status(200).render('produtos/cadastro', { categorias: Blacklist });
     } catch (error) {
-        console.error(error);
-        res.status(500).render('error', { 
-            message: 'Erro interno ao buscar os produtos no banco de dados.' 
-        });
+      res.status(500).render('error', { message: 'Erro ao carregar o formulário.' });
     }
-};
+  },
 
-
-exports.exibirFormularioCadastro = (req, res) => {
-    res.render('produtos/cadastro');
-};
-
-
-exports.cadastrar = async (req, res) => {
+  cadastrar: async (req, res) => {
     try {
-        const { nome, preco, descricao, imagem_url, estoque } = req.body;
+      const { nome, preco, quantidade, descricao, status, categoria_id } = req.body;
+      const usuario_id = req.user.id;
 
-    
-        if (!nome || !preco || !estoque) {
-            return res.status(400).render('error', { 
-                message: 'Os campos Nome, Preço e Estoque são obrigatórios.' 
-            });
-        }
-
-     
-        const precoNumerico = parseFloat(preco);
-        const estoqueNumerico = parseInt(estoque);
-
-        if (isNaN(precoNumerico) || precoNumerico <= 0) {
-            return res.status(400).render('error', { 
-                message: 'O preço informado deve ser um número válido e maior que zero.' 
-            });
-        }
-
-        if (isNaN(estoqueNumerico) || estoqueNumerico < 0) {
-            return res.status(400).render('error', { 
-                message: 'O estoque informado não pode ser um valor negativo.' 
-            });
-        }
-
-       const usuario_id = req.user ? req.user.id : 1; 
-
-        await Produto.create({
-            nome: nome,
-            preco: precoNumerico,
-            descricao: descricao,
-            imagem_url: imagem_url,
-            estoque: estoqueNumerico,
-            usuario_id: usuario_id
+      if (!nome || !preco || !quantidade || !descricao || !status || !categoria_id) {
+        const Blacklist = await Categoria.findAll();
+        return res.status(400).render('produtos/cadastro', { 
+          categorias: Blacklist, 
+          error_message: 'Todos os campos são obrigatórios!' 
         });
+      }
 
-       
-        res.redirect('/produtos');
+      await Produto.create({ nome, preco, quantidade, descricao, status, categoria_id, usuario_id });
+      res.redirect('/');
     } catch (error) {
-        console.error(error);
-        res.status(500).render('error', { 
-            message: 'Erro interno do servidor ao tentar salvar o produto.' 
-        });
+      const Blacklist = await Categoria.findAll();
+      res.status(500).render('produtos/cadastro', { 
+        categorias: Blacklist, 
+        error_message: 'Erro interno ao salvar o produto.' 
+      });
     }
+  },
+
+  consultar: async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (isNaN(id)) return res.status(400).render('error', { message: 'ID inválido.' });
+
+      const produto = await Produto.findByPk(id, { include: [Categoria] });
+      if (!produto) return res.status(404).render('error', { message: 'Produto não encontrado.' });
+
+      res.status(200).render('produtos/consulta', { produto });
+    } catch (error) {
+      res.status(500).render('error', { message: 'Erro ao consultar o produto.' });
+    }
+  }
 };

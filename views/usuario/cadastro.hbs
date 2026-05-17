@@ -2,29 +2,32 @@
   <div class="col-md-6">
     <div class="card shadow">
       <div class="card-body p-4">
-        <h3 class="card-title text-center fw-bold mb-4">Cadastro de Usuário</h3>
+        <h3 class="card-title text-center fw-bold mb-4">Criar Conta - ElectroStore</h3>
+        
+        {{#if error_message}}
+          <div class="alert alert-danger text-center">{{error_message}}</div>
+        {{/if}}
+
         <form action="/users/cadastro" method="POST">
           <div class="mb-3">
-            <label for="nome" class="form-label">Nome</label>
+            <label for="nome" class="form-label">Nome Completo</label>
             <input type="text" class="form-control" id="nome" name="nome" required>
           </div>
+          
           <div class="mb-3">
             <label for="email" class="form-label">E-mail</label>
             <input type="email" class="form-control" id="email" name="email" required>
           </div>
+          
           <div class="mb-3">
             <label for="senha" class="form-label">Senha</label>
             <input type="password" class="form-control" id="senha" name="senha" required>
           </div>
-          <div class="mb-3">
-            <label for="perfil" class="form-label">Perfil de Acesso</label>
-            <select class="form-select" id="perfil" name="perfil" required>
-              <option value="usuario" selected>Usuário Comum</option>
-              <option value="lojista">Lojista</option>
-              <option value="admin">Administrador</option>
-            </select>
+          
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <a href="/" class="text-decoration-none text-secondary small">Voltar ao Início</a>
+            <button type="submit" class="btn btn-primary px-4 fw-bold">Cadastrar</button>
           </div>
-          <button type="submit" class="btn btn-dark w-100 mt-3">Cadastrar</button>
         </form>
       </div>
     </div>

@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-white" href="/">ElectroStore</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto nav-pills nav-fill">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/historia">Nossa História</a>
+        </li>
+        {{#if user}}
+          {{#if (eq user.perfil "admin")}}
+            <li class="nav-item">
+              <a class="nav-link text-white fw-bold" href="/produtos/novo">Cadastrar Produto</a>
+            </li>
+          {{/if}}
+        {{/if}}
+      </ul>
+
+      <ul class="navbar-nav ms-auto nav-pills nav-fill align-items-center">
+        {{#if user}}
+          <li class="nav-item text-white me-3 small">
+            Olá, <strong>{{user.nome}}</strong> ({{user.perfil}})
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-light text-primary btn-sm fw-bold" href="/users/logout">Sair</a>
+          </li>
+        {{else}}
+          <li class="nav-item me-2">
+            <a class="btn btn-outline-light btn-sm" href="/users/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-light text-primary btn-sm fw-bold" href="/users/cadastro">Cadastro Usuário</a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+</nav>
