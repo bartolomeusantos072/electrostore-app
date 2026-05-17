@@ -3,20 +3,28 @@
     <div class="card shadow">
       <div class="card-body p-4">
         <h3 class="card-title text-center fw-bold mb-4">Cadastro de Usuário</h3>
-        <form>
+        <form action="/users/cadastro" method="POST">
           <div class="mb-3">
-            <label class="form-label">Nome</label>
-            <input type="text" class="form-control" required>
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">E-mail</label>
-            <input type="email" class="form-control" required>
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" name="email" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Senha</label>
-            <input type="password" class="form-control" required>
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="senha" name="senha" required>
           </div>
-          <button type="submit" class="btn btn-dark w-100">Cadastrar</button>
+          <div class="mb-3">
+            <label for="perfil" class="form-label">Perfil de Acesso</label>
+            <select class="form-select" id="perfil" name="perfil" required>
+              <option value="usuario" selected>Usuário Comum</option>
+              <option value="lojista">Lojista</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-dark w-100 mt-3">Cadastrar</button>
         </form>
       </div>
     </div>

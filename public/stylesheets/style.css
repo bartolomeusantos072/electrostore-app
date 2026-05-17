@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+.cabecalho-eletro {
+    background-color: #0056b3 !important; /* Azul marcante para o cabeçalho */
+}
+
+.cabecalho-eletro .nav-link,
+.cabecalho-eletro .navbar-brand,
+.cabecalho-eletro text-white,
+.cabecalho-eletro span {
+    color: #ffffff !important; /* Força todas as letras a ficarem brancas */
+}
+
+.cabecalho-eletro .nav-link:hover {
+    color: #d4e6f1 !important; /* Efeito hover suave nas letras */
+}
