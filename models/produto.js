@@ -3,16 +3,15 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Produto extends Model {
     static associate(models) {
-      Produto.belongsTo(models.Categoria, { foreignKey: 'categoria_id', as: 'categoria' });
-      Produto.belongsTo(models.Usuario, { foreignKey: 'usuario_id', as: 'usuario' });
+      Produto.belongsTo(models.Categoria, { foreignKey: 'categoria_id' });
+      Produto.belongsTo(models.Usuario, { foreignKey: 'usuario_id' });
     }
   }
-  Produto.init({
+Produto.init({
     nome: { type: DataTypes.STRING, allowNull: false },
     preco: { type: DataTypes.FLOAT, allowNull: false },
     descricao: { type: DataTypes.TEXT, allowNull: false },
-    imagem_url: { type: DataTypes.STRING, allowNull: true },
-    estoque: { type: DataTypes.INTEGER, allowNull: false },
+    quantidade: { type: DataTypes.INTEGER, allowNull: false },
     status: { type: DataTypes.ENUM('ativo', 'inativo'), defaultValue: 'ativo', allowNull: false },
     categoria_id: { type: DataTypes.INTEGER, allowNull: false },
     usuario_id: { type: DataTypes.INTEGER, allowNull: false }

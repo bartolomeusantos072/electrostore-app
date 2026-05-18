@@ -14,7 +14,7 @@ router.get('/cadastro', (req, res) => {
 
 router.post('/cadastro', async (req, res) => {
   try {
-    const { nome, email, senha } = req.body;
+    const { nome, email, senha, perfil } = req.body;
     
     if (!nome || !email || !senha) {
       return res.status(400).render('usuario/cadastro', { 
@@ -26,7 +26,7 @@ router.post('/cadastro', async (req, res) => {
       nome,
       email,
       senha_hash: senha,
-      perfil: 'usuario' 
+      perfil: perfil || 'usuario' 
     });
     
     res.redirect('/users/login');

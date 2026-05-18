@@ -6,15 +6,16 @@ module.exports = (sequelize, DataTypes) => {
       Usuario.hasMany(models.Produto, { foreignKey: 'usuario_id', as: 'produtos' });
     }
   }
-  Usuario.init({
-    nome: { type: DataTypes.STRING, allowNull: false },
-    email: { type: DataTypes.STRING, allowNull: false, unique: true },
-    senha: { type: DataTypes.STRING, allowNull: false },
-    perfil: { type: DataTypes.ENUM('cliente', 'lojista', 'admin'), defaultValue: 'cliente', allowNull: false }
-  }, {
-    sequelize,
-    modelName: 'Usuario',
-    tableName: 'Usuarios'
-  });
+  // Dentro de models/usuario.js
+Usuario.init({
+  nome: { type: DataTypes.STRING, allowNull: false },
+  email: { type: DataTypes.STRING, allowNull: false, unique: true },
+  senha_hash: { type: DataTypes.STRING, allowNull: false }, // Certifique-se de que está assim, e não 'senha'
+  perfil: { type: DataTypes.ENUM('admin', 'lojista', 'usuario'), defaultValue: 'usuario', allowNull: false }
+}, {
+  sequelize,
+  modelName: 'Usuario',
+  tableName: 'Usuarios'
+});
   return Usuario;
 };

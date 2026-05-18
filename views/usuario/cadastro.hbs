@@ -23,6 +23,15 @@
             <label for="senha" class="form-label">Senha</label>
             <input type="password" class="form-control" id="senha" name="senha" required>
           </div>
+
+          <div class="mb-3">
+            <label for="perfil" class="form-label">Tipo de Perfil (Acesso)</label>
+            <select class="form-select" id="perfil" name="perfil" required>
+              <option value="usuario" selected>Usuário Padrão</option>
+              <option value="lojista">Lojista (Compra e Venda)</option>
+              <option value="admin">Administrador (Cadastro de Produtos)</option>
+            </select>
+          </div>
           
           <div class="d-flex justify-content-between align-items-center mt-4">
             <a href="/" class="text-decoration-none text-secondary small">Voltar ao Início</a>

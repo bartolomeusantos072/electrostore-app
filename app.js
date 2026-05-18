@@ -64,7 +64,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 app.use((req, res, next) => {
-    res.locals.user = req.user || null;
+    res.locals.user = req.user ? req.user.get({ plain: true }) : null;
     next();
 });
 

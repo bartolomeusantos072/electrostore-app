@@ -1,10 +1,17 @@
 <div class="container mt-4">
+    {{#if user}}
+    <div class="alert alert-info py-2 text-center small mb-3">
+        Sessão Ativa: <strong>{{user.nome}}</strong> | Nível de Acesso: <span
+            class="badge bg-dark">{{user.perfil}}</span>
+    </div>
+    {{/if}}
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Lista de Produtos - ElectroStore</h2>
         {{#if user}}
-            {{#if (eq user.perfil "admin")}}
-                <a href="/produtos/novo" class="btn btn-primary">Cadastrar Novo Produto</a>
-            {{/if}}
+        {{#if (eq user.perfil "admin")}}
+        <a href="/produtos/novo" class="btn btn-primary">Cadastrar Novo Produto</a>
+        {{/if}}
         {{/if}}
     </div>
 
@@ -29,34 +36,60 @@
         <tbody>
             {{#each produtos}}
             <tr>
-                <td>{{this.Categoria.nome}}</td>
+                <td>
+                    {{#if this.Categoria}}
+                    {{this.Categoria.nome}}
+                    {{else}}
+                    Sem Categoria
+                    {{/if}}
+                </td>
                 <td>{{this.nome}}</td>
                 <td>
                     {{#if (eq this.quantidade 0)}}
-                        <span class="badge bg-danger">Esgotado</span>
+                    <span class="badge bg-danger">Esgotado</span>
                     {{else}}
-                        {{this.quantidade}} un
+                    {{this.quantidade}} un
                     {{/if}}
                 </td>
                 <td>R$ {{this.preco}}</td>
                 <td class="text-center">
-                    <div class="d-inline-flex gap-2">
-                        <a href="/produtos/consulta/{{this.id}}" class="btn btn-sm btn-info text-white">Consultar</a>
+                    <div class="flex-column bd-highlight mb-3">
+                        <a href="/produtos/consulta/{{this.id}}" class="btn btn-sm btn-info text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                <path
+                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                            </svg>
+                            Consultar
+                        </a>
 
-                        {{#if ../user}}
-                            {{#if (eq ../user.perfil "lojista")}}
-                                <form action="/produtos/compra/{{this.id}}" method="POST" class="m-0">
-                                    <button type="submit" class="btn btn-sm btn-success">Registrar Compra</button>
-                                </form>
+                        {{#if @root.user}}
+                        {{#if (eq @root.user.perfil "lojista")}}
+                        <form action="/produtos/compra/{{this.id}}" method="POST" class="m-0">
+                            <button type="submit" class="btn btn-danger btn-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                                </svg>
+                                Registrar Compra</button>
+                        </form>
 
-                                {{#if (gt this.quantidade 0)}}
-                                <form action="/produtos/venda/{{this.id}}" method="POST" class="m-0">
-                                    <button type="submit" class="btn btn-sm btn-warning">Registrar Venda</button>
-                                </form>
-                                {{else}}
-                                    <button class="btn btn-sm btn-secondary" disabled>Registrar Venda</button>
-                                {{/if}}
-                            {{/if}}
+                        {{#if (gt this.quantidade 0)}}
+                        <form action="/produtos/venda/{{this.id}}" method="POST" class="m-0">
+                            <button type="submit" class="btn btn-success ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                                </svg>
+                                Registrar Venda</button>
+                        </form>
+                        {{else}}
+                        <button class="btn btn-sm btn-success" disabled>Registrar Venda</button>
+                        {{/if}}
+                        {{/if}}
                         {{/if}}
                     </div>
                 </td>
@@ -68,7 +101,4 @@
             {{/each}}
         </tbody>
     </table>
-    <div class="mt-3">
-        <a href="/" class="btn btn-secondary">Voltar para a Página Principal</a>
-    </div>
 </div>
